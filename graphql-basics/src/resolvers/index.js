@@ -1,4 +1,5 @@
 export * from './Query'
+export * from './Subscription'
 export * from './Mutation'
 export * from './User'
 export * from './Post'
