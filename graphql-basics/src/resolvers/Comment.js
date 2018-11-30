@@ -1,20 +1,10 @@
 const Comment = {
-  author(parent, args, {
-    db
-  }, info) {
-    return db.users.find((user) => {
-      return user.id === parent.author;
-    });
+  author(parent, args, { db }) {
+    return db.users.find(user => user.id === parent.author)
   },
-  post(parent, args, {
-    db
-  }, info) {
-    return db.posts.find((post) => {
-      return post.id === parent.post;
-    });
-  },
+  post(parent, args, { db }) {
+    return db.posts.find(post => post.id === parent.post)
+  }
 }
 
-export {
-  Comment
-}
+export { Comment as default }
