@@ -16,10 +16,10 @@ const Mutation = {
       info
     )
   },
-  async deleteUser(parent, args, { prisma }, info) {
+  deleteUser(parent, args, { prisma }, info) {
     return prisma.mutation.deleteUser(args, info)
   },
-  async updateUser(parent, args, { prisma }, info) {
+  updateUser(parent, args, { prisma }, info) {
     return prisma.mutation.updateUser(args, info)
   },
   createPost(parent, args, { prisma }, info) {
