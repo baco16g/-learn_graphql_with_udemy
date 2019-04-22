@@ -1,30 +1,12 @@
 const Query = {
-  users(parent, args, { db }) {
-    if (!args.query) {
-      return db.users
-    }
-
-    return db.users.filter(user =>
-      user.name.toLowerCase().includes(args.query.toLowerCase())
-    )
+  users(parent, args, { prisma }, info) {
+    return prisma.query.users(args, info)
   },
-  posts(parent, args, { db }) {
-    if (!args.query) {
-      return db.posts
-    }
-
-    return db.posts.filter(post => {
-      const isTitleMatch = post.title
-        .toLowerCase()
-        .includes(args.query.toLowerCase())
-      const isBodyMatch = post.body
-        .toLowerCase()
-        .includes(args.query.toLowerCase())
-      return isTitleMatch || isBodyMatch
-    })
+  posts(parent, args, { prisma }, info) {
+    return prisma.query.posts(args, info)
   },
-  comments(parent, args, { db }) {
-    return db.comments
+  comments(parent, args, { prisma }, info) {
+    return prisma.comments.posts(args, info)
   },
   me() {
     return {
