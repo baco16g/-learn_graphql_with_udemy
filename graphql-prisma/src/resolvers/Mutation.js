@@ -1,4 +1,5 @@
 import bcrypt from 'bcryptjs'
+import jwt from 'jsonwebtoken'
 
 const Mutation = {
   async createUser(parent, args, { prisma }, info) {
@@ -6,15 +7,16 @@ const Mutation = {
       throw new Error('Password must be 8 characters or longer.')
     }
     const password = await bcrypt.hash(args.data.password, 10)
-    return prisma.mutation.createUser(
-      {
-        data: {
-          ...args.data,
-          password
-        }
-      },
-      info
-    )
+    const user = prisma.mutation.createUser({
+      data: {
+        ...args.data,
+        password
+      }
+    })
+    return {
+      user,
+      token: jwt.sign({ userId: user.id }, 'thisisasecret')
+    }
   },
   deleteUser(parent, args, { prisma }, info) {
     return prisma.mutation.deleteUser(args, info)
