@@ -1,108 +1,30 @@
-import uuidv4 from 'uuid/v4'
-
 const Mutation = {
   async createUser(parent, args, { prisma }, info) {
     return prisma.mutation.createUser({ data: args.data }, info)
   },
   async deleteUser(parent, args, { prisma }, info) {
-    return prisma.mutation.deleteUser(
-      {
-        where: {
-          id: args.id
-        }
-      },
-      info
-    )
+    return prisma.mutation.deleteUser(args, info)
   },
   async updateUser(parent, args, { prisma }, info) {
-    return prisma.mutation.updateUser(
-      {
-        where: {
-          id: args.id
-        },
-        data: args.data
-      },
-      info
-    )
+    return prisma.mutation.updateUser(args, info)
   },
   createPost(parent, args, { prisma }, info) {
-    return prisma.mutation.createPost(
-      {
-        data: {
-          title: args.data.title,
-          body: args.data.body,
-          published: args.data.published,
-          author: {
-            connect: {
-              id: args.data.author
-            }
-          }
-        }
-      },
-      info
-    )
+    return prisma.mutation.createPost(args, info)
   },
   deletePost(parent, args, { prisma }, info) {
-    return prisma.mutation.deletePost(
-      {
-        where: {
-          id: args.id
-        }
-      },
-      info
-    )
+    return prisma.mutation.deletePost(args, info)
   },
   updatePost(parent, args, { prisma }, info) {
-    return prisma.mutation.updatePost(
-      {
-        where: {
-          id: args.id
-        },
-        data: args.data
-      },
-      info
-    )
+    return prisma.mutation.updatePost(args, info)
   },
   createComment(parent, args, { prisma }, info) {
-    return prisma.mutation.createComment(
-      {
-        data: {
-          text: args.data.text,
-          author: {
-            connect: {
-              id: args.data.author
-            }
-          },
-          post: {
-            connect: {
-              id: args.data.post
-            }
-          }
-        }
-      },
-      info
-    )
+    return prisma.mutation.createComment(args, info)
   },
   deleteComment(parent, args, { prisma }, info) {
-    return prisma.mutation.deleteComment(
-      {
-        where: {
-          id: args.id
-        }
-      },
-      info
-    )
+    return prisma.mutation.deleteComment(args, info)
   },
   updateComment(parent, args, { prisma }, info) {
-    return prisma.mutation.updateComment(
-      {
-        where: {
-          id: args.id
-        },
-        data: args.data
-      },
-      info
-    )
+    return prisma.mutation.updateComment(args, info)
   }
 }
 
