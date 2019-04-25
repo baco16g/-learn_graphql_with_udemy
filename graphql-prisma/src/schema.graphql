@@ -8,8 +8,8 @@ type Query {
 }
 
 type Mutation {
-  login(data: LoginUserInput!): AuthPayload!
   createUser(data: CreateUserInput!): AuthPayload!
+  login(data: LoginUserInput!): AuthPayload!
   deleteUser: User!
   updateUser(data: UpdateUserInput!): User!
   createPost(data: CreatePostInput!): Post!
@@ -23,6 +23,7 @@ type Mutation {
 type Subscription {
   comment(postId: ID!): CommentSubscriptionPayload!
   post: PostSubscriptionPayload!
+  myPost: PostSubscriptionPayload!
 }
 
 type AuthPayload {
@@ -100,7 +101,7 @@ enum MutationType {
 
 type PostSubscriptionPayload {
   mutation: MutationType!
-  data: Post!
+  node: Post
 }
 
 type CommentSubscriptionPayload {
