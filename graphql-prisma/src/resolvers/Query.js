@@ -2,21 +2,44 @@ import getUserId from '../utils/getUserId'
 
 const Query = {
   users(parent, args, { prisma }, info) {
-    return prisma.query.users(args, info)
-  },
-  posts(parent, args, { prisma }, info) {
-    return prisma.query.posts(
+    const { query, first, skip, after } = args
+    return prisma.query.users(
       {
+        first,
+        skip,
+        after,
         where: {
-          published: true,
-          ...(args.query
+          ...(query
             ? {
                 OR: [
                   {
-                    title_contains: args.query
+                    name_contains: query
+                  }
+                ]
+              }
+            : {})
+        }
+      },
+      info
+    )
+  },
+  posts(parent, args, { prisma }, info) {
+    const { query, first, skip, after } = args
+    return prisma.query.posts(
+      {
+        first,
+        skip,
+        after,
+        where: {
+          published: true,
+          ...(query
+            ? {
+                OR: [
+                  {
+                    title_contains: query
                   },
                   {
-                    body_contains: args.query
+                    body_contains: query
                   }
                 ]
               }
@@ -27,18 +50,22 @@ const Query = {
     )
   },
   myPosts(parent, args, { prisma, request }, info) {
+    const { query, first, skip, after } = args
     const userId = getUserId(request)
     return prisma.query.posts(
       {
+        first,
+        skip,
+        after,
         where: {
-          ...(args.query
+          ...(query
             ? {
                 OR: [
                   {
-                    title_contains: args.query
+                    title_contains: query
                   },
                   {
-                    body_contains: args.query
+                    body_contains: query
                   }
                 ]
               }
@@ -52,7 +79,8 @@ const Query = {
     )
   },
   comments(parent, args, { prisma }, info) {
-    return prisma.comments.posts(args, info)
+    const { first, skip, after } = args
+    return prisma.query.comments({ first, skip, after }, info)
   },
   me(parent, args, { prisma, request }, info) {
     const userId = getUserId(request)
