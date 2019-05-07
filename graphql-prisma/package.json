@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
+    "@babel/polyfill": "^7.4.4",
     "bcryptjs": "^2.4.3",
     "graphql-cli": "^3.0.11",
     "graphql-yoga": "^1.17.4",
@@ -11,11 +12,13 @@
     "prisma-binding": "^2.3.10"
   },
   "devDependencies": {
+    "@babel/cli": "^7.4.4",
     "@babel/core": "^7.1.6",
     "@babel/node": "^7.0.0",
     "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
     "@babel/preset-env": "^7.1.6",
     "babel-eslint": "^10.0.1",
+    "env-cmd": "^9.0.1",
     "eslint": "^5.9.0",
     "eslint-config-prettier": "^3.3.0",
     "eslint-plugin-prettier": "^3.0.0",
@@ -24,9 +27,11 @@
     "prettier-eslint": "^8.8.2"
   },
   "scripts": {
-    "start": "nodemon src/index.js --ext js,graphql --exec babel-node",
+    "start": "node dist/index.js",
+    "heroku-postbuild": "babel src --out-dir dist --copy-files",
+    "dev": "env-cmd -f ./config/dev.env nodemon src/index.js --ext js,graphql --exec babel-node",
     "lint": "eslint ./src/**/*.js --fix",
-    "get-schema": "graphql get-schema -p prisma",
+    "get-schema": "graphql get-schema -p prisma --dotenv config/dev.env",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
