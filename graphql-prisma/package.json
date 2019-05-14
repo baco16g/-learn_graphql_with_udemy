@@ -5,7 +5,10 @@
   "main": "index.js",
   "dependencies": {
     "@babel/polyfill": "^7.4.4",
+    "@babel/register": "^7.4.4",
+    "apollo-boost": "^0.3.1",
     "bcryptjs": "^2.4.3",
+    "cross-fetch": "^3.0.2",
     "graphql-cli": "^3.0.11",
     "graphql-yoga": "^1.17.4",
     "jsonwebtoken": "^8.5.1",
@@ -33,7 +36,11 @@
     "dev": "env-cmd -f ./config/dev.env nodemon src/index.js --ext js,graphql --exec babel-node",
     "lint": "eslint ./src/**/*.js --fix",
     "get-schema": "graphql get-schema -p prisma --dotenv config/dev.env",
-    "test": "jest --watch"
+    "test": "env-cmd -f ./config/test.env jest --watch --runInBand"
+  },
+  "jest": {
+    "globalSetup": "./jest/globalSetup.js",
+    "globalTeardown": "./jest/globalTeardown.js"
   },
   "author": "",
   "license": "ISC"
